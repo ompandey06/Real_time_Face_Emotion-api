@@ -1,12 +1,12 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase  # Changed this
 import cv2
 import numpy as np
-import av
+import os
 from tensorflow.keras.models import model_from_json, Sequential
 from tensorflow.keras.saving import register_keras_serializable
 
-# --- 1. MODEL LOADING LOGIC (CRITICAL) ---
+# --- 1. MODEL LOADING ---
 
 
 @register_keras_serializable()
@@ -14,7 +14,6 @@ class CustomSequential(Sequential):
     pass
 
 
-# This must be outside the class so it loads once when the app starts
 with open("facialemotionmodel.json", "r") as json_file:
     model_json = json_file.read()
 
@@ -24,11 +23,11 @@ model.load_weights("facialemotionmodel.h5")
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 EMOTIONS = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
 
-# --- 2. VIDEO PROCESSING LOGIC ---
+# --- 2. STABILIZED VIDEO CLASS ---
 
 
-class EmotionProcessor(VideoProcessorBase):
-    def recv(self, frame: av.VideoFrame) -> av.VideoFrame:
+class EmotionTransformer(VideoTransformerBase):  # Using TransformerBase
+    def transform(self, frame):  # Changed 'recv' to 'transform'
         img = frame.to_ndarray(format="bgr24")
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -47,24 +46,17 @@ class EmotionProcessor(VideoProcessorBase):
             cv2.putText(img, label, (x, y - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
 
-        return av.VideoFrame.from_ndarray(img, format="bgr24")
+        return img  # Simply return the array
 
 
-# --- 3. FRONTEND UI ---
-st.set_page_config(page_title="Emotion Detector")
-st.title("Real-Time Face Emotion Detector")
-st.write("Click 'Start' below to begin.")
+# --- 3. UI ---
+st.title("Live Emotion Detector")
 
 webrtc_streamer(
     key="emotion-detection",
-    video_processor_factory=EmotionProcessor,
-    # This block fixes the "Connection taking longer than expected" error
+    video_transformer_factory=EmotionTransformer,  # Changed factory name
     rtc_configuration={
         "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
     },
-    media_stream_constraints={
-        "video": True,
-        "audio": False
-    },
-    async_processing=True
+    media_stream_constraints={"video": True, "audio": False}
 )
