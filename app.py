@@ -58,10 +58,13 @@ st.write("Click 'Start' below to begin.")
 webrtc_streamer(
     key="emotion-detection",
     video_processor_factory=EmotionProcessor,
-    # This configuration helps the browser find your webcam
+    # This block fixes the "Connection taking longer than expected" error
     rtc_configuration={
         "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
     },
-    media_stream_constraints={"video": True, "audio": False},
+    media_stream_constraints={
+        "video": True,
+        "audio": False
+    },
     async_processing=True
 )
