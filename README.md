@@ -17,3 +17,14 @@ Technologies Used:
 4. Web Interface: Streamlit
 5. Real-Time Streaming: streamlit-webrtc
 6. Model Type: Convolutional Neural Network (CNN)
+
+Installation & Setup:
+🔹 Step 1: Clone the Repository
+git clone https://github.com/your-username/Face_Emotion_Detection.git
+cd Face_Emotion_Detection
+
+🔹 Step 2: Install Dependencies
+pip install -r requirements.txt
+
+🔹 Step 3: Run the Application (Local)
+streamlit run app.py
