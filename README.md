@@ -34,15 +34,17 @@ streamlit run app.py
 <img width="1919" height="951" alt="image" src="https://github.com/user-attachments/assets/69206ccf-9ae5-4406-b71c-396bef0d097e" />
 <img width="1919" height="968" alt="image" src="https://github.com/user-attachments/assets/5107882e-641e-4dd1-855e-0cbd467a0515" />
 
-Author
+Author:
 
 Om Pandey
 B.Tech – Electronics & Communication Engineering
 Bharati Vidyapeeth College of Engineering
 
-License
+License:
 
 This project is developed for academic and educational purposes.
+
+NOTE:- This model have only approx 70% accuracy.
 
 
 
