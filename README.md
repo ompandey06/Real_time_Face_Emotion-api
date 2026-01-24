@@ -9,3 +9,11 @@ The model classifies facial expressions into the following 7 emotions:
 5.Sad
 6.Surprise
 7.Neutral
+
+Technologies Used:
+1. Programming Language: Python
+2. Deep Learning Framework: TensorFlow, Keras
+3. Computer Vision: OpenCV
+4. Web Interface: Streamlit
+5. Real-Time Streaming: streamlit-webrtc
+6. Model Type: Convolutional Neural Network (CNN)
