@@ -37,11 +37,10 @@ streamlit run app.py
 Author:
 
 Om Pandey
-B.Tech – Electronics & Communication Engineering
-Bharati Vidyapeeth College of Engineering
+- B.Tech – Electronics & Communication Engineering
+- Bharati Vidyapeeth College of Engineering
 
 License:
-
 This project is developed for academic and educational purposes.
 
 NOTE:- This model have only approx 70% accuracy.
